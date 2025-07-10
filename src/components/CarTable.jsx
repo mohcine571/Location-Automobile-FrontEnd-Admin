@@ -23,7 +23,7 @@ const CarFormModal = ({ isOpen, onClose, onSave, existingCar }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const carData = { 
-      ...existingCar, // conserver id si modification
+      ...existingCar, // conserve l'id si modification
       marque, 
       modele, 
       prix, 
@@ -36,8 +36,8 @@ const CarFormModal = ({ isOpen, onClose, onSave, existingCar }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md max-h-full overflow-auto">
         <h2 className="text-2xl font-semibold mb-4">
           {existingCar ? 'Modifier la voiture' : 'Ajouter une voiture'}
         </h2>
@@ -99,17 +99,45 @@ const CarTable = () => {
   const [cars, setCars] = useState([
     {
       id: 1,
-      marque: 'Toyota',
-      modele: 'Yaris',
-      prix: '250 MAD/jour',
-      image: 'https://cdn.pixabay.com/photo/2016/11/29/03/53/car-1869803_1280.jpg',
+      marque: 'Peugeot',
+      modele: '208',
+      prix: '320 MAD/jour',
+      image: 'https://www.peugeot.ma/content/dam/peugeot/master/b2c/our-range/showroom/208/2023-10-new-208/mobile/208_ALLUREEV_M.jpg?imwidth=768',
     },
     {
       id: 2,
+      marque: 'Hyundai',
+      modele: 'Accent',
+      prix: '300 MAD/jour',
+      image: 'https://edc.web7msserver.com/wp-content/uploads/2024/03/accent3.jpg',
+    },
+    {
+      id: 3,
       marque: 'Renault',
-      modele: 'Clio',
+      modele: 'Kangoo',
+      prix: '350 MAD/jour',
+      image: 'https://autoactu.ma/wp-content/uploads/2023/09/unnamed-4.png',
+    },
+    {
+      id: 4,
+      marque: 'Renault',
+      modele: 'Clio IV',
       prix: '280 MAD/jour',
-      image: 'https://cdn.pixabay.com/photo/2017/01/06/19/15/renault-1955726_1280.jpg',
+      image: 'https://www.largus.fr/images/2023-12/Renault-Clio-Esprit-Alpine-2023-bd.jpg',
+    },
+    {
+      id: 5,
+      marque: 'Dacia',
+      modele: 'Sandero Streetway',
+      prix: '260 MAD/jour',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHL6hFq7UC5ctMJ9oikwf9e06aBj80qrpqw&s',
+    },
+    {
+      id: 6,
+      marque: 'Dacia',
+      modele: 'Logan',
+      prix: '270 MAD/jour',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzapMxQlmIYMfDpozIhoDxBIDn62_Gmn0xcw&s',
     },
   ]);
 
@@ -157,7 +185,7 @@ const CarTable = () => {
   };
 
   return (
-    <div className="bg-white rounded shadow p-4">
+    <div className="bg-white rounded shadow p-4 max-w-7xl mx-auto mt-8">
       <button
         onClick={openAddModal}
         className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -165,55 +193,57 @@ const CarTable = () => {
         Ajouter voiture
       </button>
 
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2">Image</th>
-            <th className="p-2">Marque</th>
-            <th className="p-2">Modèle</th>
-            <th className="p-2">Prix</th>
-            <th className="p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cars.map((car) => (
-            <tr key={car.id} className="text-center border-t">
-              <td className="p-2">
-                <img
-                  src={car.image}
-                  alt={`${car.marque} ${car.modele}`}
-                  className="w-20 h-12 object-cover mx-auto rounded"
-                />
-              </td>
-              <td className="p-2">{car.marque}</td>
-              <td className="p-2">{car.modele}</td>
-              <td className="p-2">{car.prix}</td>
-              <td className="p-2 space-x-2">
-                <button
-                  onClick={() => alert(`Consulter : ${car.marque} ${car.modele}`)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded"
-                >
-                  Consulter
-                </button>
-                <button
-                  onClick={() => openEditModal(car)}
-                  className="bg-yellow-500 text-white px-3 py-1 rounded"
-                >
-                  Modifier
-                </button>
-                <button
-                  onClick={() => handleDeleteCar(car.id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded"
-                >
-                  Supprimer
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full border border-gray-300 table-auto">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border border-gray-300">Image</th>
+              <th className="p-2 border border-gray-300">Marque</th>
+              <th className="p-2 border border-gray-300">Modèle</th>
+              <th className="p-2 border border-gray-300">Prix</th>
+              <th className="p-2 border border-gray-300">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cars.map((car) => (
+              <tr key={car.id} className="text-center border-t border-gray-300">
+                <td className="p-2">
+                  <img
+                    src={car.image}
+                    alt={`${car.marque} ${car.modele}`}
+                    className="w-24 h-16 object-cover rounded mx-auto"
+                  />
+                </td>
+                <td className="p-2">{car.marque}</td>
+                <td className="p-2">{car.modele}</td>
+                <td className="p-2">{car.prix}</td>
+                <td className="p-2 space-x-2 whitespace-nowrap">
+                  <button
+                    onClick={() => alert(`Consulter : ${car.marque} ${car.modele}`)}
+                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                  >
+                    Consulter
+                  </button>
+                  <button
+                    onClick={() => openEditModal(car)}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCar(car.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Modal Form */}
+      {/* Modal */}
       <CarFormModal
         isOpen={isModalOpen}
         onClose={closeModal}
