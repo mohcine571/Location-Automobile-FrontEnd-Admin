@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import CarTable from '../components/CarTable';
+import CarTable from '../components/CarManagement';
 
 const Dashboard = () => {
   return (
